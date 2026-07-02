@@ -1,0 +1,7 @@
+food_id,name,category,serving_amount,serving_unit,serving_weight_g,kcal,protein_g,fat_g,carb_g,sodium_mg,source_type,source_publisher,source_url,accessed_at,notes
+lxj-lu-ji-tui,卤鸡腿,main_dish,1,份,65,129,14,7,2,,third_party,FatSecret,https://www.fatsecret.cn/热量营养/老乡鸡/卤鸡腿/1份,2026-07-02,钠含量未公开
+lxj-cong-you-cai-tai,葱油菜苔,vegetable,100,克,100,83,2.3,5.9,4.2,,third_party,FatSecret,https://www.fatsecret.cn/热量营养/老乡鸡/葱油菜苔/100克,2026-07-02,钠含量和门店实际份量未公开
+lxj-chi-zhi-yu-kuai,豉汁鱼块,main_dish,100,克,100,121,12.7,7.3,1.2,,third_party,FatSecret,https://www.fatsecret.cn/热量营养/老乡鸡/豉汁鱼块/100克,2026-07-02,钠含量和门店实际份量未公开
+lxj-zheng-nen-dou-fu,蒸嫩豆腐,main_dish,100,克,100,112,7.2,4.5,10.5,,third_party,FatSecret,https://www.fatsecret.cn/热量营养/老乡鸡/蒸嫩豆腐/100克,2026-07-02,钠含量和门店实际份量未公开
+lxj-broccoli-chicken,西兰花炒鸡胸肉,main_dish,100,克,100,94,8.3,5.2,3.5,,third_party,FatSecret,https://www.fatsecret.cn/热量营养/老乡鸡/西兰花炒鸡胸肉/100克,2026-07-02,钠含量和门店实际份量未公开
+lxj-san-hei-yuan-qi-fan,三黑元气饭,staple,1,份,,508,9,3,111,,third_party,FatSecret,https://www.fatsecret.cn/热量营养/老乡鸡/三黑元气饭/1份,2026-07-02,钠含量和每份克重未公开

@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+      name="description"
+      content="基于公开营养信息的老乡鸡餐品营养计算与透明配餐演示项目。"
+    >
+    <meta name="theme-color" content="#173c32">
+    <title>餐盘有数 · LXJ Meal Planner</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%23173c32%22/><circle cx=%2232%22 cy=%2232%22 r=%2218%22 fill=%22%23f3e8d3%22/><path d=%22M20 34c8-9 15-10 24-4-2 9-10 14-18 12-4-1-6-4-6-8Z%22 fill=%22%23e86e45%22/></svg>">
+    <link rel="stylesheet" href="./src/styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="餐盘有数首页">
+        <span class="brand-mark" aria-hidden="true">
+          <span></span>
+        </span>
+        <span>
+          <strong>餐盘有数</strong>
+          <small>LXJ MEAL PLANNER</small>
+        </span>
+      </a>
+
+      <nav class="site-nav" aria-label="主导航">
+        <a href="#planner">自由搭配</a>
+        <a href="#recommendations">目标配餐</a>
+        <a href="#data-notes">数据说明</a>
+      </nav>
+
+      <a class="header-cta" href="#planner">开始配餐</a>
+    </header>
+
+    <main id="main-content">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            V1 · 公开数据实验
+          </div>
+          <h1 id="hero-title">
+            这顿饭，
+            <span>吃得更明白。</span>
+          </h1>
+          <p class="hero-lead">
+            选择菜品，查看热量与宏量营养；再让透明规则替你比较组合。
+            每个数字都带来源，每个缺口都不藏起来。
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#planner">
+              计算我的一餐
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a class="text-link" href="#data-notes">
+              先看数据可信度
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+          <div class="hero-proof" aria-label="项目数据摘要">
+            <div>
+              <strong id="hero-food-count">6</strong>
+              <span>条演示菜品</span>
+            </div>
+            <div>
+              <strong>5</strong>
+              <span>项营养指标</span>
+            </div>
+            <div>
+              <strong>100%</strong>
+              <span>来源可追溯</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="一份可解释的餐盘示意图">
+          <div class="visual-note note-top">
+            <span>数据口径</span>
+            <strong>按份 / 每100克</strong>
+          </div>
+          <div class="plate-shadow"></div>
+          <div class="plate">
+            <div class="plate-rim"></div>
+            <div class="food-shape rice">
+              <i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <div class="food-shape protein">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="food-shape greens">
+              <i></i><i></i><i></i><i></i>
+            </div>
+            <div class="plate-label">
+              <small>本餐已知热量</small>
+              <strong id="hero-meal-kcal">720</strong>
+              <span>kcal</span>
+            </div>
+          </div>
+          <div class="visual-note note-bottom">
+            <span class="status-dot"></span>
+            <div>
+              <strong>不确定性已标注</strong>
+              <small>缺失钠值不按 0 计算</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="trust-strip" aria-label="重要说明">
+        <span class="trust-icon" aria-hidden="true">i</span>
+        <p>
+          <strong>非官方项目。</strong>
+          当前为功能演示，结果基于公开第三方数据和标准份量，仅作一般信息参考。
+        </p>
+        <a href="#data-notes">查看限制</a>
+      </section>
+
+      <section class="section planner-section" id="planner" aria-labelledby="planner-title">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">01 · 自由搭配</span>
+            <h2 id="planner-title">挑你想吃的，数字交给我。</h2>
+          </div>
+          <p>数量按数据源标示的“一份”或“每100克”计算，可使用 0.5 倍增量。</p>
+        </div>
+
+        <div class="planner-grid">
+          <section class="food-browser" aria-labelledby="food-browser-title">
+            <div class="panel-toolbar">
+              <h3 id="food-browser-title">菜品库</h3>
+              <label class="search-box">
+                <span class="visually-hidden">搜索菜品</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7"></circle>
+                  <path d="m20 20-4-4"></path>
+                </svg>
+                <input id="food-search" type="search" placeholder="搜索菜品" autocomplete="off">
+              </label>
+            </div>
+            <div id="category-filters" class="filter-row" aria-label="菜品分类"></div>
+            <div id="food-list" class="food-list" aria-live="polite"></div>
+          </section>
+
+          <aside class="meal-panel" aria-labelledby="meal-panel-title">
+            <div class="meal-panel-head">
+              <div>
+                <span class="section-kicker light">你的餐盘</span>
+                <h3 id="meal-panel-title">本餐已选</h3>
+              </div>
+              <button id="clear-meal" class="ghost-button" type="button">清空</button>
+            </div>
+
+            <div id="selected-foods" class="selected-foods"></div>
+
+            <div class="meal-divider"></div>
+
+            <div id="nutrition-summary" class="nutrition-summary"></div>
+            <div id="meal-assessment" class="meal-assessment"></div>
+
+            <div class="meal-actions">
+              <button id="copy-summary" class="button button-light" type="button">
+                复制本餐摘要
+                <span aria-hidden="true">⧉</span>
+              </button>
+              <a class="meal-data-link" href="#data-notes">这些数字可靠吗？</a>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section
+        class="section recommendation-section"
+        id="recommendations"
+        aria-labelledby="recommendation-title"
+      >
+        <div class="section-heading compact">
+          <div>
+            <span class="section-kicker">02 · 目标配餐</span>
+            <h2 id="recommendation-title">不是乱抽，是有理由地推荐。</h2>
+          </div>
+          <p>枚举所有“主食 + 主菜 + 蔬菜”组合，再按公开、可测试的规则排序。</p>
+        </div>
+
+        <div id="goal-selector" class="goal-selector" aria-label="选择配餐目标"></div>
+        <div id="recommendation-context" class="recommendation-context"></div>
+        <div id="recommendation-list" class="recommendation-list" aria-live="polite"></div>
+      </section>
+
+      <section class="section data-section" id="data-notes" aria-labelledby="data-title">
+        <div class="data-intro">
+          <span class="section-kicker light">03 · 数据说明</span>
+          <h2 id="data-title">知道多少，就诚实地说多少。</h2>
+          <p>
+            V1 优先验证产品闭环，没有把缺失字段填成看似完整的数字。
+            这不是“数据没做完”的遮掩，而是营养工具最重要的产品约束。
+          </p>
+          <a
+            class="button button-outline"
+            href="https://github.com/Maj1sty/lxj-meal-planner/blob/main/docs/data-methodology.md"
+            target="_blank"
+            rel="noreferrer"
+          >
+            阅读数据方法
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <div class="data-dashboard">
+          <div class="data-stat-card featured">
+            <span>宏量营养覆盖</span>
+            <strong>6 / 6</strong>
+            <div class="coverage-track"><i style="width: 100%"></i></div>
+            <small>热量、蛋白质、脂肪、碳水均有记录</small>
+          </div>
+          <div class="data-stat-card warning">
+            <span>钠含量覆盖</span>
+            <strong>0 / 6</strong>
+            <div class="coverage-track"><i style="width: 0%"></i></div>
+            <small>因此控钠模式不会输出虚假排名</small>
+          </div>
+          <div class="data-stat-card">
+            <span>官方营养值</span>
+            <strong>0 / 6</strong>
+            <div class="coverage-track"><i style="width: 0%"></i></div>
+            <small>待从官方营养标识逐条交叉核验</small>
+          </div>
+          <div class="data-stat-card">
+            <span>核验日期</span>
+            <strong class="date-value">2026.07.02</strong>
+            <small>每条数据都保留来源和访问日期</small>
+          </div>
+        </div>
+
+        <div class="gap-grid">
+          <article class="gap-card">
+            <span class="gap-number">01</span>
+            <h3>缺少钠含量</h3>
+            <p>当前第三方公开页面没有展示钠值，所以食盐当量和控钠排名保持不可用。</p>
+          </article>
+          <article class="gap-card">
+            <span class="gap-number">02</span>
+            <h3>部分份量未知</h3>
+            <p>三黑元气饭只有“每份”口径，克重未知；按100克记录的菜品也缺少门店实际出餐克重。</p>
+          </article>
+          <article class="gap-card">
+            <span class="gap-number">03</span>
+            <h3>菜单并不完整</h3>
+            <p>V1 仅收录 6 条可追溯演示数据，不代表实时菜单、地区供应或全部在售状态。</p>
+          </article>
+          <article class="gap-card">
+            <span class="gap-number">04</span>
+            <h3>存在门店波动</h3>
+            <p>实际分量、调味和批次可能变化，计算结果不应替代包装标签或专业营养建议。</p>
+          </article>
+        </div>
+
+        <div class="source-list">
+          <div>
+            <span class="section-kicker light">公开来源</span>
+            <h3>从原页面回看每个数字</h3>
+          </div>
+          <ul>
+            <li>
+              <a
+                href="https://www.sina.cn/news/detail/5296041042647572.html"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span>老乡鸡官方微博：溯源报告 2.0 线上可视化说明</span>
+                <b>官方发布 ↗</b>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.fatsecret.cn/热量营养/老乡鸡"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span>FatSecret：老乡鸡餐品热量和营养信息</span>
+                <b>第三方数据 ↗</b>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.nhc.gov.cn/sps/c100088/202012/9f71d532e5684a54a63090a75eb737fb/files/1732844456897_92407.pdf"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span>国家卫健委：餐饮食品营养标识指南</span>
+                <b>换算依据 ↗</b>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <span class="brand-mark small" aria-hidden="true"><span></span></span>
+        <div>
+          <strong>餐盘有数</strong>
+          <p>一个重视来源与不确定性的开源练习。</p>
+        </div>
+      </div>
+      <p class="footer-disclaimer">
+        本项目与老乡鸡及 FatSecret 无隶属、授权或合作关系。商标归其各自权利人所有。
+      </p>
+      <a href="https://github.com/Maj1sty/lxj-meal-planner" target="_blank" rel="noreferrer">
+        GitHub ↗
+      </a>
+    </footer>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>
