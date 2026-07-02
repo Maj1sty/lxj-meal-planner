@@ -1,9 +1,26 @@
+import { reportFoods } from "./report-foods.generated.js";
+
 export const CATEGORY_LABELS = Object.freeze({
   all: "全部",
   staple: "主食",
   main_dish: "主菜",
   vegetable: "蔬菜",
   soup: "汤品",
+  breakfast: "早餐",
+  snack: "小吃",
+  drink: "饮品",
+});
+
+export const STORE_TEMPLATE = Object.freeze({
+  id: "hefei-xinda-haodifang",
+  name: "老乡鸡（信达好第坊店）",
+  city: "安徽省合肥市",
+  district: "包河区",
+  address: "东流路信达好第坊商铺",
+  sourceUrl: "https://www.amap.com/search?query=%E8%80%81%E4%B9%A1%E9%B8%A1%20%E4%BF%A1%E8%BE%BE%E5%A5%BD%E7%AC%AC%E5%9D%8A%E5%BA%97&city=340100",
+  snapshotDate: "2026-07-02",
+  scope: "公开营养菜单模板",
+  availability: "实时在售状态待门店或点餐页面核验",
 });
 
 export const SOURCE_LEVELS = Object.freeze({
@@ -33,7 +50,7 @@ function traceReportSource(foodName) {
   };
 }
 
-export const foods = Object.freeze([
+const catalogFoods = Object.freeze([
   {
     id: "lxj-lu-ji-tui",
     name: "卤鸡腿",
@@ -484,4 +501,10 @@ export const foods = Object.freeze([
   },
 ]);
 
+const foodsByName = new Map(catalogFoods.map((food) => [food.name, food]));
+for (const food of reportFoods) {
+  foodsByName.set(food.name, food);
+}
+
+export const foods = Object.freeze(Array.from(foodsByName.values()));
 export const foodIndex = new Map(foods.map((food) => [food.id, food]));

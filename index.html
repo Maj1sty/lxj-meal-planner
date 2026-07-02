@@ -47,7 +47,7 @@
         <div class="hero-copy">
           <div class="eyebrow">
             <span class="eyebrow-dot"></span>
-            v0.2.0 · 20 条餐品 · 可离线
+            v0.3.0 · 98 条餐品 · 每日热量目标
           </div>
           <h1 id="hero-title">
             这顿饭，
@@ -69,7 +69,7 @@
           </div>
           <div class="hero-proof" aria-label="项目数据摘要">
             <div>
-              <strong id="hero-food-count">20</strong>
+              <strong id="hero-food-count">98</strong>
               <span>条可追溯餐品</span>
             </div>
             <div>
@@ -134,6 +134,22 @@
           <p>数量按数据源标示的“一份”或“每100克”计算，可使用 0.5 倍增量。</p>
         </div>
 
+        <div class="store-template-banner">
+          <div>
+            <span>当前菜单模板</span>
+            <strong id="store-template-name">老乡鸡（信达好第坊店）</strong>
+            <small id="store-template-meta">安徽省合肥市包河区 · 公开营养菜单模板</small>
+          </div>
+          <div class="store-template-count">
+            <strong id="store-template-count">98 条</strong>
+            <span>营养餐品</span>
+          </div>
+          <p>
+            门店名称以高德公开信息为准；当前列表不代表当天实时在售，
+            具体供应仍需以门店或点餐页面为准。
+          </p>
+        </div>
+
         <div class="planner-grid">
           <section class="food-browser" aria-labelledby="food-browser-title">
             <div class="panel-toolbar">
@@ -162,6 +178,54 @@
 
             <div id="selected-foods" class="selected-foods"></div>
 
+            <section class="calorie-goal-card" aria-labelledby="calorie-goal-title">
+              <div class="calorie-goal-head">
+                <div>
+                  <span>每日热量目标</span>
+                  <strong id="calorie-goal-title">自定义需求</strong>
+                </div>
+                <label>
+                  <span class="visually-hidden">每日热量目标</span>
+                  <input
+                    id="daily-calorie-goal"
+                    type="number"
+                    min="800"
+                    max="6000"
+                    step="50"
+                    value="2000"
+                    inputmode="numeric"
+                  >
+                  <b>kcal</b>
+                </label>
+              </div>
+              <div class="calorie-presets" aria-label="常用每日热量目标">
+                <button type="button" data-calorie-goal="1500">1500</button>
+                <button type="button" data-calorie-goal="1800">1800</button>
+                <button type="button" data-calorie-goal="2000">2000</button>
+                <button type="button" data-calorie-goal="2500">2500</button>
+              </div>
+              <div class="calorie-goal-summary">
+                <div>
+                  <span>设定目标</span>
+                  <strong id="calorie-goal-value">2000 kcal</strong>
+                </div>
+                <div>
+                  <span>本餐占比</span>
+                  <strong id="calorie-goal-ratio">0%</strong>
+                </div>
+                <div>
+                  <span>目标余量</span>
+                  <strong id="calorie-goal-remaining">选餐后显示</strong>
+                </div>
+              </div>
+              <div class="calorie-goal-track">
+                <i id="calorie-goal-bar" style="width: 0%"></i>
+              </div>
+              <small id="calorie-goal-status">
+                当前只比较本餐与每日目标，不记录其他餐次。
+              </small>
+            </section>
+
             <div class="meal-divider"></div>
 
             <div id="nutrition-summary" class="nutrition-summary"></div>
@@ -183,7 +247,7 @@
           <span class="section-kicker light">02 · 数据与离线说明</span>
           <h2 id="data-title">知道多少，就诚实地说多少。</h2>
           <p>
-            当前收录 20 条可追溯餐品，没有把缺失字段填成看似完整的数字。
+            当前收录 98 条可追溯餐品，其中 87 条来自溯源报告开源整理。
             这不是“数据没做完”的遮掩，而是营养工具最重要的产品约束。
           </p>
           <a
@@ -200,19 +264,19 @@
         <div class="data-dashboard">
           <div class="data-stat-card featured">
             <span>宏量营养覆盖</span>
-            <strong id="macro-coverage">20 / 20</strong>
+            <strong id="macro-coverage">98 / 98</strong>
             <div class="coverage-track"><i style="width: 100%"></i></div>
             <small>热量、蛋白质、脂肪、碳水均有记录</small>
           </div>
           <div class="data-stat-card warning">
             <span>钠含量覆盖</span>
-            <strong id="sodium-coverage">14 / 20</strong>
-            <div class="coverage-track"><i id="sodium-coverage-bar" style="width: 70%"></i></div>
+            <strong id="sodium-coverage">95 / 98</strong>
+            <div class="coverage-track"><i id="sodium-coverage-bar" style="width: 97%"></i></div>
             <small>混合已知与未知钠值时，整餐钠合计保持缺失</small>
           </div>
           <div class="data-stat-card">
             <span>官方营养值</span>
-            <strong id="official-coverage">0 / 20</strong>
+            <strong id="official-coverage">0 / 98</strong>
             <div class="coverage-track"><i style="width: 0%"></i></div>
             <small>待从官方营养标识逐条交叉核验</small>
           </div>
@@ -227,7 +291,7 @@
           <article class="gap-card">
             <span class="gap-number">01</span>
             <h3>部分钠值仍缺失</h3>
-            <p>原有 6 条第三方记录没有钠值；只要一餐包含其中任一餐品，钠与食盐当量就保持未知。</p>
+            <p>仍有 3 条早期第三方记录没有钠值；只要一餐包含其中任一餐品，钠与食盐当量就保持未知。</p>
           </article>
           <article class="gap-card">
             <span class="gap-number">02</span>
@@ -237,7 +301,7 @@
           <article class="gap-card">
             <span class="gap-number">03</span>
             <h3>菜单并不完整</h3>
-            <p>当前 20 条记录不代表实时菜单、地区供应或全部在售状态；新增条目也不等于门店当日有售。</p>
+            <p>98 条是公开营养菜单模板，不代表信达好第坊店当天全部在售；实时菜单仍需门店核验。</p>
           </article>
           <article class="gap-card">
             <span class="gap-number">04</span>
@@ -262,6 +326,20 @@
           </div>
           <ol class="update-list">
             <li class="current">
+              <div class="update-version">
+                <strong>v0.3.0</strong>
+                <time datetime="2026-07-02">2026.07.02</time>
+              </div>
+              <div>
+                <h4>热量目标与合肥门店菜单模板</h4>
+                <ul>
+                  <li>支持自定义每日摄入热量目标，并显示本餐占比与剩余额度。</li>
+                  <li>以信达好第坊店为模板，将可追溯餐品一次性扩充至 98 条。</li>
+                  <li>明确区分营养菜单模板和门店实时在售状态。</li>
+                </ul>
+              </div>
+            </li>
+            <li>
               <div class="update-version">
                 <strong>v0.2.0</strong>
                 <time datetime="2026-07-02">2026.07.02</time>
@@ -297,6 +375,26 @@
             <h3>从原页面回看每个数字</h3>
           </div>
           <ul>
+            <li>
+              <a
+                href="https://lxjchina.com.cn/info.php?class_id=102106"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span>老乡鸡官网：菜品溯源报告 2.0 下载与说明</span>
+                <b>官方来源 →</b>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/Gar-b-age/CookLikeHOC"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span>CookLikeHOC：溯源报告餐品与营养数据开源整理</span>
+                <b>87 条记录 →</b>
+              </a>
+            </li>
             <li>
               <a
                 href="https://www.sina.cn/news/detail/5296041042647572.html"

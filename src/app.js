@@ -3,7 +3,13 @@ import {
   foodIndex,
   foods,
   SOURCE_LEVELS,
+  STORE_TEMPLATE,
 } from "./data/foods.js";
+import {
+  buildCalorieProgress,
+  DEFAULT_DAILY_CALORIE_GOAL,
+  normalizeDailyCalorieGoal,
+} from "./core/calorie-goal.js";
 import {
   buildMealAssessment,
   calculateMeal,
@@ -14,6 +20,7 @@ import {
 const state = {
   category: "all",
   query: "",
+  dailyCalorieGoal: loadDailyCalorieGoal(),
   selected: new Map([
     ["lxj-san-hei-yuan-qi-fan", 1],
     ["lxj-lu-ji-tui", 1],
@@ -36,6 +43,15 @@ const elements = {
   sodiumCoverage: document.querySelector("#sodium-coverage"),
   sodiumCoverageBar: document.querySelector("#sodium-coverage-bar"),
   officialCoverage: document.querySelector("#official-coverage"),
+  storeTemplateName: document.querySelector("#store-template-name"),
+  storeTemplateMeta: document.querySelector("#store-template-meta"),
+  storeTemplateCount: document.querySelector("#store-template-count"),
+  dailyCalorieGoal: document.querySelector("#daily-calorie-goal"),
+  calorieGoalValue: document.querySelector("#calorie-goal-value"),
+  calorieGoalRatio: document.querySelector("#calorie-goal-ratio"),
+  calorieGoalRemaining: document.querySelector("#calorie-goal-remaining"),
+  calorieGoalBar: document.querySelector("#calorie-goal-bar"),
+  calorieGoalStatus: document.querySelector("#calorie-goal-status"),
   offlineStatus: document.querySelector("#offline-status"),
   toast: document.querySelector("#toast"),
 };
@@ -218,6 +234,7 @@ function renderMeal() {
     ? "—"
     : Math.round(meal.values.kcal);
   elements.heroFoodCount.textContent = foods.length;
+  renderDailyCalorieGoal(meal.values.kcal);
 }
 
 function renderDataCoverage() {
@@ -229,6 +246,36 @@ function renderDataCoverage() {
   elements.sodiumCoverage.textContent = `${sodiumCount} / ${foods.length}`;
   elements.sodiumCoverageBar.style.width = `${sodiumRatio * 100}%`;
   elements.officialCoverage.textContent = `${officialCount} / ${foods.length}`;
+  elements.storeTemplateName.textContent = STORE_TEMPLATE.name;
+  elements.storeTemplateMeta.textContent =
+    `${STORE_TEMPLATE.city}${STORE_TEMPLATE.district} · ${STORE_TEMPLATE.scope}`;
+  elements.storeTemplateCount.textContent = `${foods.length} 条`;
+}
+
+function renderDailyCalorieGoal(mealKcal) {
+  const progress = buildCalorieProgress(mealKcal, state.dailyCalorieGoal);
+  const percentage = progress.percentage === null
+    ? 0
+    : Math.round(progress.percentage);
+
+  elements.dailyCalorieGoal.value = progress.goal;
+  elements.calorieGoalValue.textContent = `${progress.goal} kcal`;
+  elements.calorieGoalRatio.textContent = `${percentage}%`;
+  elements.calorieGoalBar.style.width = `${progress.progressPercentage}%`;
+  elements.calorieGoalBar.classList.toggle("over", progress.exceeded);
+
+  if (progress.mealKcal === null) {
+    elements.calorieGoalRemaining.textContent = "选餐后显示";
+    elements.calorieGoalStatus.textContent = "当前只比较本餐与每日目标，不记录其他餐次。";
+    return;
+  }
+
+  elements.calorieGoalRemaining.textContent = progress.exceeded
+    ? `超出 ${Math.round(Math.abs(progress.remainingKcal))} kcal`
+    : `剩余 ${Math.round(progress.remainingKcal)} kcal`;
+  elements.calorieGoalStatus.textContent = progress.exceeded
+    ? "本餐已超过设定的每日热量目标。"
+    : `本餐约占每日目标的 ${percentage}%。`;
 }
 
 function nutritionTile(field, meal) {
@@ -253,6 +300,30 @@ function nutritionTile(field, meal) {
 
 function selectedItems() {
   return Array.from(state.selected, ([foodId, quantity]) => ({ foodId, quantity }));
+}
+
+function loadDailyCalorieGoal() {
+  try {
+    return normalizeDailyCalorieGoal(
+      localStorage.getItem("lxj-daily-calorie-goal"),
+      DEFAULT_DAILY_CALORIE_GOAL,
+    );
+  } catch {
+    return DEFAULT_DAILY_CALORIE_GOAL;
+  }
+}
+
+function setDailyCalorieGoal(value) {
+  state.dailyCalorieGoal = normalizeDailyCalorieGoal(value);
+  try {
+    localStorage.setItem(
+      "lxj-daily-calorie-goal",
+      String(state.dailyCalorieGoal),
+    );
+  } catch {
+    // The goal still works for this session when storage is unavailable.
+  }
+  renderMeal();
 }
 
 function displayServing(food, quantity) {
@@ -297,6 +368,11 @@ function copyMealSummary() {
     `- 钠：${formatValue("sodiumMg", meal.values.sodiumMg)}`,
     `- 食盐当量：${formatValue("saltEquivalentG", meal.values.saltEquivalentG)}`,
     "",
+    `每日热量目标：${state.dailyCalorieGoal} kcal`,
+    `本餐占比：${Math.round(
+      buildCalorieProgress(meal.values.kcal, state.dailyCalorieGoal).percentage ?? 0,
+    )}%`,
+    "",
     "说明：结果基于公开第三方数据；缺失值未按 0 计算。",
   ].join("\n");
 
@@ -328,6 +404,14 @@ elements.clearMeal.addEventListener("click", () => {
 });
 
 elements.copySummary.addEventListener("click", copyMealSummary);
+elements.dailyCalorieGoal.addEventListener("input", (event) => {
+  if (event.target.value !== "" && event.target.validity.valid) {
+    setDailyCalorieGoal(event.target.value);
+  }
+});
+elements.dailyCalorieGoal.addEventListener("change", (event) => {
+  setDailyCalorieGoal(event.target.value);
+});
 
 document.addEventListener("click", (event) => {
   const categoryButton = event.target.closest("[data-category]");
@@ -335,6 +419,13 @@ document.addEventListener("click", (event) => {
     state.category = categoryButton.dataset.category;
     renderCategoryFilters();
     renderFoodList();
+    return;
+  }
+
+  const calorieGoalButton = event.target.closest("[data-calorie-goal]");
+  if (calorieGoalButton) {
+    setDailyCalorieGoal(calorieGoalButton.dataset.calorieGoal);
+    showToast(`每日热量目标已设为 ${state.dailyCalorieGoal} kcal`);
     return;
   }
 
