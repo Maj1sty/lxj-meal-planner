@@ -4,18 +4,18 @@ import {
   foods,
   SOURCE_LEVELS,
   STORE_TEMPLATE,
-} from "./data/foods.js";
+} from "./data/foods.js?version=v0.3.1";
 import {
   buildCalorieProgress,
   DEFAULT_DAILY_CALORIE_GOAL,
   normalizeDailyCalorieGoal,
-} from "./core/calorie-goal.js";
+} from "./core/calorie-goal.js?version=v0.3.1";
 import {
   buildMealAssessment,
   calculateMeal,
   formatValue,
   NUTRIENT_META,
-} from "./core/nutrition.js";
+} from "./core/nutrition.js?version=v0.3.1";
 
 const state = {
   category: "all",
@@ -461,9 +461,27 @@ window.addEventListener("online", updateConnectionStatus);
 window.addEventListener("offline", updateConnectionStatus);
 
 if ("serviceWorker" in navigator) {
+  let refreshingForServiceWorkerUpdate = false;
+
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (refreshingForServiceWorkerUpdate) {
+      return;
+    }
+
+    refreshingForServiceWorkerUpdate = true;
+    window.location.reload();
+  });
+
   window.addEventListener("load", async () => {
     try {
-      await navigator.serviceWorker.register("./service-worker.js", { scope: "./" });
+      const registration = await navigator.serviceWorker.register(
+        "./service-worker.js",
+        {
+          scope: "./",
+          updateViaCache: "none",
+        },
+      );
+      await registration.update();
       updateConnectionStatus();
     } catch (error) {
       console.warn("Service Worker 注册失败：", error);

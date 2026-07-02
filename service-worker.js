@@ -1,16 +1,17 @@
 const CACHE_PREFIX = "lxj-meal-planner-";
-const CACHE_NAME = `${CACHE_PREFIX}v0.3.0`;
+const CACHE_VERSION = "v0.3.1";
+const CACHE_NAME = `${CACHE_PREFIX}${CACHE_VERSION}`;
 const APP_SHELL_PATHS = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
   "./assets/icon.svg",
-  "./src/styles.css",
-  "./src/app.js",
-  "./src/core/calorie-goal.js",
-  "./src/data/foods.js",
-  "./src/data/report-foods.generated.js",
-  "./src/core/nutrition.js",
+  `./src/styles.css?version=${CACHE_VERSION}`,
+  `./src/app.js?version=${CACHE_VERSION}`,
+  `./src/core/calorie-goal.js?version=${CACHE_VERSION}`,
+  `./src/data/foods.js?version=${CACHE_VERSION}`,
+  `./src/data/report-foods.generated.js?version=${CACHE_VERSION}`,
+  `./src/core/nutrition.js?version=${CACHE_VERSION}`,
 ];
 
 function appShellUrls() {
@@ -49,24 +50,17 @@ async function networkFirst(request) {
     }
     return response;
   } catch {
-    return cache.match(request)
-      ?? cache.match(new URL("./index.html", self.registration.scope).href);
+    const cachedResponse = await cache.match(request);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+
+    if (request.mode === "navigate") {
+      return cache.match(new URL("./index.html", self.registration.scope).href);
+    }
+
+    return Response.error();
   }
-}
-
-async function staleWhileRevalidate(request) {
-  const cache = await caches.open(CACHE_NAME);
-  const cachedResponse = await cache.match(request);
-  const networkResponse = fetch(request)
-    .then(async (response) => {
-      if (response.ok) {
-        await cache.put(request, response.clone());
-      }
-      return response;
-    })
-    .catch(() => cachedResponse);
-
-  return cachedResponse ?? networkResponse;
 }
 
 self.addEventListener("fetch", (event) => {
@@ -77,9 +71,5 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  event.respondWith(
-    event.request.mode === "navigate"
-      ? networkFirst(event.request)
-      : staleWhileRevalidate(event.request),
-  );
+  event.respondWith(networkFirst(event.request));
 });

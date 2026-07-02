@@ -1,4 +1,4 @@
-import { reportFoods } from "./report-foods.generated.js";
+import { reportFoods } from "./report-foods.generated.js?version=v0.3.1";
 
 export const CATEGORY_LABELS = Object.freeze({
   all: "全部",

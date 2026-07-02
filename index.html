@@ -11,7 +11,7 @@
     <title>餐盘有数 · LXJ Meal Planner</title>
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%23173c32%22/><circle cx=%2232%22 cy=%2232%22 r=%2218%22 fill=%22%23f3e8d3%22/><path d=%22M20 34c8-9 15-10 24-4-2 9-10 14-18 12-4-1-6-4-6-8Z%22 fill=%22%23e86e45%22/></svg>">
-    <link rel="stylesheet" href="./src/styles.css">
+    <link rel="stylesheet" href="./src/styles.css?version=v0.3.1">
   </head>
   <body>
     <a class="skip-link" href="#main-content">跳到主要内容</a>
@@ -47,7 +47,7 @@
         <div class="hero-copy">
           <div class="eyebrow">
             <span class="eyebrow-dot"></span>
-            v0.3.0 · 98 条餐品 · 每日热量目标
+            v0.3.1 · 98 条餐品 · 缓存更新修复
           </div>
           <h1 id="hero-title">
             这顿饭，
@@ -327,6 +327,20 @@
           <ol class="update-list">
             <li class="current">
               <div class="update-version">
+                <strong>v0.3.1</strong>
+                <time datetime="2026-07-02">2026.07.02</time>
+              </div>
+              <div>
+                <h4>离线缓存更新修复</h4>
+                <ul>
+                  <li>修复版本更新后仍可能显示旧版 20 条餐品的问题。</li>
+                  <li>在线时优先获取最新资源，断网时继续使用本地缓存。</li>
+                  <li>新 Service Worker 接管页面后自动刷新并应用最新版本。</li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <div class="update-version">
                 <strong>v0.3.0</strong>
                 <time datetime="2026-07-02">2026.07.02</time>
               </div>
@@ -468,6 +482,6 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-    <script type="module" src="./src/app.js"></script>
+    <script type="module" src="./src/app.js?version=v0.3.1"></script>
   </body>
 </html>
