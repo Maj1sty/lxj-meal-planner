@@ -1,6 +1,6 @@
 {
   "name": "lxj-meal-planner",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "description": "A source-aware, offline-ready meal nutrition calculator with customizable calorie goals.",
   "type": "module",
