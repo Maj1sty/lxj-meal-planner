@@ -30,6 +30,7 @@
       <nav class="site-nav" aria-label="主导航">
         <a href="#planner">自由搭配</a>
         <a href="#data-notes">数据说明</a>
+        <a href="#updates">更新记录</a>
       </nav>
 
       <div class="header-actions">
@@ -46,7 +47,7 @@
         <div class="hero-copy">
           <div class="eyebrow">
             <span class="eyebrow-dot"></span>
-            V1.1 · 20 条餐品 · 可离线
+            v0.2.0 · 20 条餐品 · 可离线
           </div>
           <h1 id="hero-title">
             这顿饭，
@@ -244,6 +245,51 @@
             <p>实际分量、调味和批次可能变化，计算结果不应替代包装标签或专业营养建议。</p>
           </article>
         </div>
+
+        <section class="update-history" id="updates" aria-labelledby="updates-title">
+          <div class="update-history-head">
+            <div>
+              <span class="section-kicker light">版本记录</span>
+              <h3 id="updates-title">每次更新，改了什么都写清楚。</h3>
+            </div>
+            <a
+              href="https://github.com/Maj1sty/lxj-meal-planner/blob/main/CHANGELOG.md"
+              target="_blank"
+              rel="noreferrer"
+            >
+              查看完整 Changelog ↗
+            </a>
+          </div>
+          <ol class="update-list">
+            <li class="current">
+              <div class="update-version">
+                <strong>v0.2.0</strong>
+                <time datetime="2026-07-02">2026.07.02</time>
+              </div>
+              <div>
+                <h4>餐品扩充与离线支持</h4>
+                <ul>
+                  <li>移除随机及目标配餐功能，保留清晰的手动搭配流程。</li>
+                  <li>餐品库由 6 条扩充至 20 条，其中 14 条含钠数据。</li>
+                  <li>加入 Service Worker、应用清单与离线缓存。</li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <div class="update-version">
+                <strong>v0.1.0</strong>
+                <time datetime="2026-07-02">2026.07.02</time>
+              </div>
+              <div>
+                <h4>首个公开版本</h4>
+                <ul>
+                  <li>完成自由选餐、数量调整、营养合计和缺失值提示。</li>
+                  <li>建立可追溯数据结构、自动化测试与 GitHub Pages 部署。</li>
+                </ul>
+              </div>
+            </li>
+          </ol>
+        </section>
 
         <div class="source-list">
           <div>

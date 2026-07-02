@@ -1552,6 +1552,92 @@ input:focus-visible {
   line-height: 1.75;
 }
 
+.update-history {
+  margin-top: 70px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line-dark);
+}
+
+.update-history-head {
+  display: flex;
+  gap: 30px;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.update-history-head h3 {
+  margin: 9px 0 0;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 25px;
+}
+
+.update-history-head > a {
+  color: #7fa88e;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.update-list {
+  margin: 30px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line-dark);
+  list-style: none;
+}
+
+.update-list > li {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 35px;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.update-list > li.current {
+  position: relative;
+}
+
+.update-list > li.current::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -18px;
+  width: 3px;
+  background: var(--orange);
+  content: "";
+}
+
+.update-version strong,
+.update-version time {
+  display: block;
+}
+
+.update-version strong {
+  color: white;
+  font-family: "Times New Roman", serif;
+  font-size: 25px;
+}
+
+.update-version time {
+  margin-top: 7px;
+  color: #7fa88e;
+  font-size: 9px;
+}
+
+.update-list h4 {
+  margin: 0;
+  font-size: 13px;
+}
+
+.update-list ul {
+  display: grid;
+  gap: 6px;
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: #899f92;
+  font-size: 9px;
+  line-height: 1.65;
+}
+
 .source-list {
   display: grid;
   grid-template-columns: 0.7fr 1.3fr;
@@ -1873,6 +1959,20 @@ input:focus-visible {
   .data-intro p,
   .button-outline {
     grid-column: 1;
+  }
+
+  .update-history-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .update-list > li {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .update-list > li.current::before {
+    left: -10px;
   }
 
   .source-list {

@@ -10,6 +10,7 @@
 - Service Worker 应用外壳缓存、离线导航回退和旧缓存清理。
 - Web App Manifest、应用图标和在线/离线状态提示。
 - Service Worker 自动化测试。
+- 说明页面中的版本更新记录。
 
 ### Removed
 
