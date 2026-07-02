@@ -29,9 +29,14 @@ test("nutrient fields contain numbers or explicit nulls", () => {
   }
 });
 
-test("known V1 gaps remain explicit and documented in records", () => {
-  assert.ok(foods.every((food) => food.nutrients.sodiumMg === null));
+test("the expanded dataset keeps known and missing sodium values explicit", () => {
+  const foodsWithSodium = foods.filter((food) => food.nutrients.sodiumMg !== null);
+  const foodsWithoutSodium = foods.filter((food) => food.nutrients.sodiumMg === null);
+
+  assert.equal(foods.length, 20);
+  assert.equal(foodsWithSodium.length, 14);
+  assert.equal(foodsWithoutSodium.length, 6);
   assert.ok(
-    foods.every((food) => food.notes.some((note) => note.includes("钠"))),
+    foodsWithoutSodium.every((food) => food.notes.some((note) => note.includes("钠"))),
   );
 });

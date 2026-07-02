@@ -5,3 +5,17 @@ lxj-chi-zhi-yu-kuai,豉汁鱼块,main_dish,100,克,100,121,12.7,7.3,1.2,,third_p
 lxj-zheng-nen-dou-fu,蒸嫩豆腐,main_dish,100,克,100,112,7.2,4.5,10.5,,third_party,FatSecret,https://www.fatsecret.cn/热量营养/老乡鸡/蒸嫩豆腐/100克,2026-07-02,钠含量和门店实际份量未公开
 lxj-broccoli-chicken,西兰花炒鸡胸肉,main_dish,100,克,100,94,8.3,5.2,3.5,,third_party,FatSecret,https://www.fatsecret.cn/热量营养/老乡鸡/西兰花炒鸡胸肉/100克,2026-07-02,钠含量和门店实际份量未公开
 lxj-san-hei-yuan-qi-fan,三黑元气饭,staple,1,份,,508,9,3,111,,third_party,FatSecret,https://www.fatsecret.cn/热量营养/老乡鸡/三黑元气饭/1份,2026-07-02,钠含量和每份克重未公开
+lxj-zi-shu-za-liang-fan,紫薯杂粮饭,staple,100,克,100,168,3.1,1.4,35.1,0,third_party,今日头条转载稿,https://www.toutiao.com/article/7619222092177588770/,2026-07-02,门店实际份量未公开
+lxj-jin-pai-lao-mu-ji-tang,金牌老母鸡汤,soup,100,克,100,38,3.8,1.8,1.4,248,third_party,CookLikeHOC / 开源市集,https://bazaar.fcc-cd.dev/recipe/%E6%B1%A4/%E9%87%91%E7%89%8C%E8%80%81%E6%AF%8D%E9%B8%A1%E6%B1%A4.md,2026-07-02,门店实际份量未公开
+lxj-mi-zhi-lu-rou-fan,秘汁卤肉饭,staple,100,克,100,157,4.8,4.4,24.1,218,third_party,新京报转载稿,https://www.bjnews.com.cn/detail/1782531912129036.html,2026-07-02,门店实际份量未公开
+lxj-xian-dan-huang-shi-zi-tou,咸蛋黄狮子头,main_dish,100,克,100,224,11.7,18.9,2.2,525,third_party,新京报转载稿,https://www.bjnews.com.cn/detail/1782531912129036.html,2026-07-02,蒸制版；门店实际份量未公开
+lxj-zhen-zhu-nuo-mi-rou-wan,珍珠糯米肉丸,main_dish,100,克,100,204,9.4,12.3,14.1,467,third_party,新京报转载稿,https://www.bjnews.com.cn/detail/1782531912129036.html,2026-07-02,门店实际份量未公开
+lxj-xiang-chang-zheng-dou-gan,香肠蒸豆干,main_dish,100,克,100,220,15.3,11.3,14.2,791,third_party,新京报转载稿,https://www.bjnews.com.cn/detail/1782531912129036.html,2026-07-02,门店实际份量未公开
+lxj-rou-bing-zheng-dan,肉饼蒸蛋,main_dish,100,克,100,142,10.6,10.9,0.7,422,third_party,新京报转载稿,https://www.bjnews.com.cn/detail/1782531912129036.html,2026-07-02,常规版；门店实际份量未公开
+lxj-wai-po-cai-chao-ji-dan,外婆菜炒鸡蛋,main_dish,100,克,100,202,6.4,15.6,9.3,876,third_party,新京报转载稿,https://www.bjnews.com.cn/detail/1782531912129036.html,2026-07-02,门店实际份量未公开
+lxj-qing-jiao-zheng-dou-mi,青椒蒸豆米,vegetable,100,克,100,172,9.1,11.1,9,455,third_party,新京报转载稿,https://www.bjnews.com.cn/detail/1782531912129036.html,2026-07-02,门店实际份量未公开
+lxj-mei-cai-kou-rou,梅菜扣肉,main_dish,100,克,100,246,8.1,21.5,5.5,932,third_party,新京报转载稿,https://www.bjnews.com.cn/detail/1782531912129036.html,2026-07-02,门店实际份量未公开
+lxj-an-chun-dan-hong-shao-rou,鹌鹑蛋红烧肉,main_dish,100,克,100,376,17,31.6,6.7,448,third_party,新京报转载稿,https://www.bjnews.com.cn/detail/1782531912129036.html,2026-07-02,门店实际份量未公开
+lxj-tang-cu-pai-gu,糖醋排骨,main_dish,100,克,100,266,20.5,15.5,11.1,841,third_party,新京报转载稿,https://www.bjnews.com.cn/detail/1782531912129036.html,2026-07-02,门店实际份量未公开
+lxj-gong-bao-ji-ding,宫保鸡丁,main_dish,100,克,100,244,13.8,17.2,8.7,657,third_party,新京报转载稿,https://www.bjnews.com.cn/detail/1782531912129036.html,2026-07-02,门店实际份量未公开
+lxj-bai-zhuo-xia,白灼虾,main_dish,100,克,100,107,23.4,1,0.7,444,third_party,新京报转载稿,https://www.bjnews.com.cn/detail/1782531912129036.html,2026-07-02,门店菜品标示为8只

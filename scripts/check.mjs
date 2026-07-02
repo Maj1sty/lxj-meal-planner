@@ -3,7 +3,7 @@ import { extname, join } from "node:path";
 import { spawnSync } from "node:child_process";
 
 const roots = ["src", "scripts", "tests"];
-const files = [];
+const files = ["service-worker.js"];
 
 async function collect(directory) {
   const entries = await readdir(directory, { withFileTypes: true });

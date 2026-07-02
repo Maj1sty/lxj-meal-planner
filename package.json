@@ -1,8 +1,8 @@
 {
   "name": "lxj-meal-planner",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "A source-aware meal nutrition calculator and transparent meal recommender.",
+  "description": "A source-aware, offline-ready meal nutrition calculator.",
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",

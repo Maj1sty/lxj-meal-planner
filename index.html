@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta
       name="description"
-      content="基于公开营养信息的老乡鸡餐品营养计算与透明配餐演示项目。"
+      content="基于公开营养信息的老乡鸡餐品营养计算工具，支持离线使用。"
     >
     <meta name="theme-color" content="#173c32">
     <title>餐盘有数 · LXJ Meal Planner</title>
+    <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%23173c32%22/><circle cx=%2232%22 cy=%2232%22 r=%2218%22 fill=%22%23f3e8d3%22/><path d=%22M20 34c8-9 15-10 24-4-2 9-10 14-18 12-4-1-6-4-6-8Z%22 fill=%22%23e86e45%22/></svg>">
     <link rel="stylesheet" href="./src/styles.css">
   </head>
@@ -28,11 +29,17 @@
 
       <nav class="site-nav" aria-label="主导航">
         <a href="#planner">自由搭配</a>
-        <a href="#recommendations">目标配餐</a>
         <a href="#data-notes">数据说明</a>
+        <a href="#updates">更新记录</a>
       </nav>
 
-      <a class="header-cta" href="#planner">开始配餐</a>
+      <div class="header-actions">
+        <div id="offline-status" class="offline-status" role="status">
+          <i aria-hidden="true"></i>
+          <span>在线 · 已支持离线</span>
+        </div>
+        <a class="header-cta" href="#planner">开始配餐</a>
+      </div>
     </header>
 
     <main id="main-content">
@@ -40,14 +47,14 @@
         <div class="hero-copy">
           <div class="eyebrow">
             <span class="eyebrow-dot"></span>
-            V1 · 公开数据实验
+            v0.2.0 · 20 条餐品 · 可离线
           </div>
           <h1 id="hero-title">
             这顿饭，
             <span>吃得更明白。</span>
           </h1>
           <p class="hero-lead">
-            选择菜品，查看热量与宏量营养；再让透明规则替你比较组合。
+            选择菜品，自动汇总热量与宏量营养，随手调整每份数量。
             每个数字都带来源，每个缺口都不藏起来。
           </p>
           <div class="hero-actions">
@@ -62,8 +69,8 @@
           </div>
           <div class="hero-proof" aria-label="项目数据摘要">
             <div>
-              <strong id="hero-food-count">6</strong>
-              <span>条演示菜品</span>
+              <strong id="hero-food-count">20</strong>
+              <span>条可追溯餐品</span>
             </div>
             <div>
               <strong>5</strong>
@@ -171,30 +178,12 @@
         </div>
       </section>
 
-      <section
-        class="section recommendation-section"
-        id="recommendations"
-        aria-labelledby="recommendation-title"
-      >
-        <div class="section-heading compact">
-          <div>
-            <span class="section-kicker">02 · 目标配餐</span>
-            <h2 id="recommendation-title">不是乱抽，是有理由地推荐。</h2>
-          </div>
-          <p>枚举所有“主食 + 主菜 + 蔬菜”组合，再按公开、可测试的规则排序。</p>
-        </div>
-
-        <div id="goal-selector" class="goal-selector" aria-label="选择配餐目标"></div>
-        <div id="recommendation-context" class="recommendation-context"></div>
-        <div id="recommendation-list" class="recommendation-list" aria-live="polite"></div>
-      </section>
-
       <section class="section data-section" id="data-notes" aria-labelledby="data-title">
         <div class="data-intro">
-          <span class="section-kicker light">03 · 数据说明</span>
+          <span class="section-kicker light">02 · 数据与离线说明</span>
           <h2 id="data-title">知道多少，就诚实地说多少。</h2>
           <p>
-            V1 优先验证产品闭环，没有把缺失字段填成看似完整的数字。
+            当前收录 20 条可追溯餐品，没有把缺失字段填成看似完整的数字。
             这不是“数据没做完”的遮掩，而是营养工具最重要的产品约束。
           </p>
           <a
@@ -211,19 +200,19 @@
         <div class="data-dashboard">
           <div class="data-stat-card featured">
             <span>宏量营养覆盖</span>
-            <strong>6 / 6</strong>
+            <strong id="macro-coverage">20 / 20</strong>
             <div class="coverage-track"><i style="width: 100%"></i></div>
             <small>热量、蛋白质、脂肪、碳水均有记录</small>
           </div>
           <div class="data-stat-card warning">
             <span>钠含量覆盖</span>
-            <strong>0 / 6</strong>
-            <div class="coverage-track"><i style="width: 0%"></i></div>
-            <small>因此控钠模式不会输出虚假排名</small>
+            <strong id="sodium-coverage">14 / 20</strong>
+            <div class="coverage-track"><i id="sodium-coverage-bar" style="width: 70%"></i></div>
+            <small>混合已知与未知钠值时，整餐钠合计保持缺失</small>
           </div>
           <div class="data-stat-card">
             <span>官方营养值</span>
-            <strong>0 / 6</strong>
+            <strong id="official-coverage">0 / 20</strong>
             <div class="coverage-track"><i style="width: 0%"></i></div>
             <small>待从官方营养标识逐条交叉核验</small>
           </div>
@@ -237,8 +226,8 @@
         <div class="gap-grid">
           <article class="gap-card">
             <span class="gap-number">01</span>
-            <h3>缺少钠含量</h3>
-            <p>当前第三方公开页面没有展示钠值，所以食盐当量和控钠排名保持不可用。</p>
+            <h3>部分钠值仍缺失</h3>
+            <p>原有 6 条第三方记录没有钠值；只要一餐包含其中任一餐品，钠与食盐当量就保持未知。</p>
           </article>
           <article class="gap-card">
             <span class="gap-number">02</span>
@@ -248,7 +237,7 @@
           <article class="gap-card">
             <span class="gap-number">03</span>
             <h3>菜单并不完整</h3>
-            <p>V1 仅收录 6 条可追溯演示数据，不代表实时菜单、地区供应或全部在售状态。</p>
+            <p>当前 20 条记录不代表实时菜单、地区供应或全部在售状态；新增条目也不等于门店当日有售。</p>
           </article>
           <article class="gap-card">
             <span class="gap-number">04</span>
@@ -256,6 +245,51 @@
             <p>实际分量、调味和批次可能变化，计算结果不应替代包装标签或专业营养建议。</p>
           </article>
         </div>
+
+        <section class="update-history" id="updates" aria-labelledby="updates-title">
+          <div class="update-history-head">
+            <div>
+              <span class="section-kicker light">版本记录</span>
+              <h3 id="updates-title">每次更新，改了什么都写清楚。</h3>
+            </div>
+            <a
+              href="https://github.com/Maj1sty/lxj-meal-planner/blob/main/CHANGELOG.md"
+              target="_blank"
+              rel="noreferrer"
+            >
+              查看完整 Changelog ↗
+            </a>
+          </div>
+          <ol class="update-list">
+            <li class="current">
+              <div class="update-version">
+                <strong>v0.2.0</strong>
+                <time datetime="2026-07-02">2026.07.02</time>
+              </div>
+              <div>
+                <h4>餐品扩充与离线支持</h4>
+                <ul>
+                  <li>移除随机及目标配餐功能，保留清晰的手动搭配流程。</li>
+                  <li>餐品库由 6 条扩充至 20 条，其中 14 条含钠数据。</li>
+                  <li>加入 Service Worker、应用清单与离线缓存。</li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <div class="update-version">
+                <strong>v0.1.0</strong>
+                <time datetime="2026-07-02">2026.07.02</time>
+              </div>
+              <div>
+                <h4>首个公开版本</h4>
+                <ul>
+                  <li>完成自由选餐、数量调整、营养合计和缺失值提示。</li>
+                  <li>建立可追溯数据结构、自动化测试与 GitHub Pages 部署。</li>
+                </ul>
+              </div>
+            </li>
+          </ol>
+        </section>
 
         <div class="source-list">
           <div>
@@ -281,6 +315,26 @@
               >
                 <span>FatSecret：老乡鸡餐品热量和营养信息</span>
                 <b>第三方数据 ↗</b>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.bjnews.com.cn/detail/1782531912129036.html"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span>新京报转载稿：溯源报告 2.0 菜品营养成分整理</span>
+                <b>第三方整理 →</b>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://bazaar.fcc-cd.dev/recipe/%E6%B1%A4/%E9%87%91%E7%89%8C%E8%80%81%E6%AF%8D%E9%B8%A1%E6%B1%A4.md"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span>CookLikeHOC：金牌老母鸡汤开源菜谱与营养成分</span>
+                <b>开源整理 →</b>
               </a>
             </li>
             <li>

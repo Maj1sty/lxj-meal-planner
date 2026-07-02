@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">餐盘有数</title>
+  <rect width="512" height="512" rx="112" fill="#173c32"/>
+  <circle cx="256" cy="256" r="154" fill="#f4efe4"/>
+  <circle cx="256" cy="256" r="124" fill="#fffdf8" stroke="#d8d0c0" stroke-width="12"/>
+  <path d="M166 278c57-70 122-85 192-31-15 73-75 112-137 93-37-11-56-32-55-62Z" fill="#e86e45"/>
+  <path d="M172 224c35-41 72-54 111-38-13 52-49 82-92 73-22-5-29-17-19-35Z" fill="#75a283"/>
+  <circle cx="322" cy="194" r="31" fill="#f1bd55"/>
+</svg>
