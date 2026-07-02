@@ -726,6 +726,62 @@ input:focus-visible {
   background: var(--paper);
 }
 
+.store-template-banner {
+  display: grid;
+  grid-template-columns: 1fr auto minmax(260px, 0.75fr);
+  gap: 24px;
+  align-items: center;
+  margin: -10px 0 28px;
+  padding: 20px 24px;
+  border: 1px solid #d9ded8;
+  border-radius: 18px;
+  background: #f3f7f2;
+}
+
+.store-template-banner span,
+.store-template-banner strong,
+.store-template-banner small {
+  display: block;
+}
+
+.store-template-banner span {
+  color: var(--ink-soft);
+  font-size: 9px;
+}
+
+.store-template-banner > div:first-child > strong {
+  margin-top: 6px;
+  color: var(--green-900);
+  font-size: 15px;
+}
+
+.store-template-banner small {
+  margin-top: 5px;
+  color: #718078;
+  font-size: 9px;
+}
+
+.store-template-count {
+  min-width: 90px;
+  padding: 10px 18px;
+  border-right: 1px solid #d5ddd7;
+  border-left: 1px solid #d5ddd7;
+  text-align: center;
+}
+
+.store-template-count strong {
+  color: var(--orange-dark);
+  font-family: "Times New Roman", serif;
+  font-size: 24px;
+}
+
+.store-template-banner > p {
+  margin: 0;
+  color: #68776f;
+  font-size: 9px;
+  line-height: 1.7;
+}
+
 .planner-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.42fr) minmax(350px, 0.78fr);
@@ -1112,6 +1168,143 @@ input:focus-visible {
   display: grid;
   gap: 10px;
   margin-top: 23px;
+}
+
+.calorie-goal-card {
+  margin-top: 20px;
+  padding: 17px;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 16px;
+  background: rgb(255 255 255 / 5%);
+}
+
+.calorie-goal-head {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.calorie-goal-head span,
+.calorie-goal-head strong {
+  display: block;
+}
+
+.calorie-goal-head span {
+  color: #9eb6a8;
+  font-size: 8px;
+}
+
+.calorie-goal-head strong {
+  margin-top: 4px;
+  font-size: 12px;
+}
+
+.calorie-goal-head label {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 10px;
+  background: rgb(0 0 0 / 10%);
+}
+
+.calorie-goal-head input {
+  width: 75px;
+  height: 34px;
+  padding: 0 8px;
+  border: 0;
+  color: white;
+  outline: 0;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.calorie-goal-head b {
+  padding-right: 9px;
+  color: #8fa99a;
+  font-size: 8px;
+}
+
+.calorie-presets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.calorie-presets button {
+  height: 28px;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 8px;
+  color: #b8cdc0;
+  background: transparent;
+  font-size: 8px;
+  cursor: pointer;
+}
+
+.calorie-presets button:hover {
+  border-color: var(--green-200);
+  color: var(--green-950);
+  background: var(--green-200);
+}
+
+.calorie-goal-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.calorie-goal-summary div {
+  min-width: 0;
+}
+
+.calorie-goal-summary span,
+.calorie-goal-summary strong {
+  display: block;
+}
+
+.calorie-goal-summary span {
+  color: #8da596;
+  font-size: 7px;
+}
+
+.calorie-goal-summary strong {
+  overflow: hidden;
+  margin-top: 4px;
+  font-size: 9px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calorie-goal-track {
+  height: 5px;
+  margin-top: 14px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: rgb(255 255 255 / 10%);
+}
+
+.calorie-goal-track i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--yellow);
+  transition: width 180ms ease;
+}
+
+.calorie-goal-track i.over {
+  background: var(--orange);
+}
+
+.calorie-goal-card > small {
+  display: block;
+  margin-top: 9px;
+  color: #8fa99a;
+  font-size: 7px;
+  line-height: 1.5;
 }
 
 .selected-item {
@@ -1772,6 +1965,14 @@ input:focus-visible {
     grid-template-columns: 1fr;
   }
 
+  .store-template-banner {
+    grid-template-columns: 1fr auto;
+  }
+
+  .store-template-banner > p {
+    grid-column: 1 / -1;
+  }
+
   .meal-panel {
     position: static;
   }
@@ -1931,6 +2132,19 @@ input:focus-visible {
   .meal-panel {
     padding: 20px;
     border-radius: 24px;
+  }
+
+  .store-template-banner {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .store-template-count {
+    padding: 10px 0;
+    border: 0;
+    border-top: 1px solid #d5ddd7;
+    border-bottom: 1px solid #d5ddd7;
+    text-align: left;
   }
 
   .panel-toolbar {

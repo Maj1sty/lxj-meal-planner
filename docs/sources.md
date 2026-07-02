@@ -26,6 +26,21 @@
 
 用途：金牌老母鸡汤每 100 克营养记录。
 
+- CookLikeHOC GitHub 仓库：
+  <https://github.com/Gar-b-age/CookLikeHOC>
+
+用途：批量导入 87 条同时包含热量、蛋白质、脂肪、碳水和钠的记录。仓库声明文字基于《老乡鸡菜品溯源报告》整理，本项目继续将其标记为第三方来源。
+
+- 老乡鸡官网，《菜品溯源报告 2.0》下载与说明：
+  <https://lxjchina.com.cn/info.php?class_id=102106>
+
+用途：确认报告版本、营养标识范围和线上溯源渠道。
+
+- 高德地图，老乡鸡（信达好第坊店）：
+  <https://www.amap.com/search?query=%E8%80%81%E4%B9%A1%E9%B8%A1%20%E4%BF%A1%E8%BE%BE%E5%A5%BD%E7%AC%AC%E5%9D%8A%E5%BA%97&city=340100>
+
+用途：确认门店正式名称和合肥市包河区位置。地图页未公开完整菜单。
+
 - 今日头条转载稿，紫薯杂粮饭门店营养标牌更正：
   <https://www.toutiao.com/article/7619222092177588770/>
 

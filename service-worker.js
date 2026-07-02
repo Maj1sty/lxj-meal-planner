@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "lxj-meal-planner-";
-const CACHE_NAME = `${CACHE_PREFIX}v0.2.0-r2`;
+const CACHE_NAME = `${CACHE_PREFIX}v0.3.0`;
 const APP_SHELL_PATHS = [
   "./",
   "./index.html",
@@ -7,7 +7,9 @@ const APP_SHELL_PATHS = [
   "./assets/icon.svg",
   "./src/styles.css",
   "./src/app.js",
+  "./src/core/calorie-goal.js",
   "./src/data/foods.js",
+  "./src/data/report-foods.generated.js",
   "./src/core/nutrition.js",
 ];
 

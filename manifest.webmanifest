@@ -1,7 +1,7 @@
 {
   "name": "餐盘有数 · LXJ Meal Planner",
   "short_name": "餐盘有数",
-  "description": "可追溯、可离线使用的餐品营养计算工具",
+  "description": "支持每日热量目标、门店菜单模板与离线使用的餐品营养计算工具",
   "lang": "zh-CN",
   "start_url": "./",
   "scope": "./",

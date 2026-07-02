@@ -33,9 +33,9 @@ test("the expanded dataset keeps known and missing sodium values explicit", () =
   const foodsWithSodium = foods.filter((food) => food.nutrients.sodiumMg !== null);
   const foodsWithoutSodium = foods.filter((food) => food.nutrients.sodiumMg === null);
 
-  assert.equal(foods.length, 20);
-  assert.equal(foodsWithSodium.length, 14);
-  assert.equal(foodsWithoutSodium.length, 6);
+  assert.equal(foods.length, 98);
+  assert.equal(foodsWithSodium.length, 95);
+  assert.equal(foodsWithoutSodium.length, 3);
   assert.ok(
     foodsWithoutSodium.every((food) => food.notes.some((note) => note.includes("钠"))),
   );

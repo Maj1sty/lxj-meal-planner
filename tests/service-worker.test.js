@@ -13,7 +13,9 @@ test("service worker precaches the complete application shell", () => {
     "./manifest.webmanifest",
     "./src/styles.css",
     "./src/app.js",
+    "./src/core/calorie-goal.js",
     "./src/data/foods.js",
+    "./src/data/report-foods.generated.js",
     "./src/core/nutrition.js",
   ]) {
     assert.match(source, new RegExp(asset.replaceAll(".", "\\.")));
