@@ -90,9 +90,9 @@ function renderFoodList() {
   if (filteredFoods.length === 0) {
     elements.foodList.innerHTML = `
       <div class="empty-state">
-        <span aria-hidden="true">?</span>
-        <strong>????????</strong>
-        <p>?????????????????</p>
+        <span aria-hidden="true">⌕</span>
+        <strong>没有找到匹配菜品</strong>
+        <p>换个关键词，或者切回“全部”看看。</p>
       </div>
     `;
     return;
@@ -122,26 +122,26 @@ function renderFoodList() {
             </div>
           </div>
           <dl class="macro-row">
-            <div><dt>???</dt><dd>${food.nutrients.proteinG.toFixed(1)}g</dd></div>
-            <div><dt>??</dt><dd>${food.nutrients.fatG.toFixed(1)}g</dd></div>
-            <div><dt>??</dt><dd>${food.nutrients.carbG.toFixed(1)}g</dd></div>
+            <div><dt>蛋白质</dt><dd>${food.nutrients.proteinG.toFixed(1)}g</dd></div>
+            <div><dt>脂肪</dt><dd>${food.nutrients.fatG.toFixed(1)}g</dd></div>
+            <div><dt>碳水</dt><dd>${food.nutrients.carbG.toFixed(1)}g</dd></div>
           </dl>
           <div class="food-card-bottom">
             <span class="missing-flag ${food.nutrients.sodiumMg === null ? "" : "complete"}">
-              <i>${food.nutrients.sodiumMg === null ? "!" : "?"}</i>
+              <i>${food.nutrients.sodiumMg === null ? "!" : "✓"}</i>
               ${food.nutrients.sodiumMg === null
-                ? "????"
-                : `? ${food.nutrients.sodiumMg}mg`}
+                ? "钠待补充"
+                : `钠 ${food.nutrients.sodiumMg}mg`}
             </span>
             <button
               class="add-button"
               type="button"
               data-action="add-food"
               data-food-id="${food.id}"
-              aria-label="??${food.name}"
+              aria-label="添加${food.name}"
             >
-              ${selectedQuantity > 0 ? `?? ${selectedQuantity}?` : "????"}
-              <span aria-hidden="true">${selectedQuantity > 0 ? "?" : "+"}</span>
+              ${selectedQuantity > 0 ? `已选 ${selectedQuantity}×` : "加入餐盘"}
+              <span aria-hidden="true">${selectedQuantity > 0 ? "✓" : "+"}</span>
             </button>
           </div>
         </article>
@@ -159,8 +159,8 @@ function renderMeal() {
     elements.selectedFoods.innerHTML = `
         <div class="meal-empty">
           <div class="empty-plate"><span>+</span></div>
-          <strong>??????</strong>
-          <p>????????????????</p>
+          <strong>餐盘还是空的</strong>
+          <p>从左侧挑选菜品，自由搭配这一餐。</p>
         </div>
     `;
   } else {
@@ -174,19 +174,19 @@ function renderMeal() {
               <small>${displayServing(food, quantity)}</small>
             </div>
           </div>
-          <div class="quantity-control" aria-label="${food.name}??">
+          <div class="quantity-control" aria-label="${food.name}数量">
             <button
               type="button"
               data-action="decrease"
               data-food-id="${food.id}"
-              aria-label="??${food.name}"
-            >?</button>
+              aria-label="减少${food.name}"
+            >−</button>
             <span>${quantity}</span>
             <button
               type="button"
               data-action="increase"
               data-food-id="${food.id}"
-              aria-label="??${food.name}"
+              aria-label="增加${food.name}"
             >+</button>
           </div>
           <button
@@ -194,8 +194,8 @@ function renderMeal() {
             type="button"
             data-action="remove"
             data-food-id="${food.id}"
-            aria-label="??${food.name}"
-          >?</button>
+            aria-label="移除${food.name}"
+          >×</button>
         </div>
       `)
       .join("");
@@ -208,19 +208,19 @@ function renderMeal() {
     </div>
     <div class="completeness-row">
       <div>
-        <span>?????</span>
+        <span>结果完整度</span>
         <strong>${Math.round(meal.completeness.ratio * 100)}%</strong>
       </div>
       <div class="completeness-track">
         <i style="width:${meal.completeness.ratio * 100}%"></i>
       </div>
-      <small>${meal.completeness.completeFields}/${meal.completeness.totalFields} ???????</small>
+      <small>${meal.completeness.completeFields}/${meal.completeness.totalFields} 项原始指标完整</small>
     </div>
   `;
 
   elements.mealAssessment.innerHTML = `
     <div class="assessment-head ${assessment.tone}">
-      <span aria-hidden="true">${assessment.tone === "caution" ? "!" : "?"}</span>
+      <span aria-hidden="true">${assessment.tone === "caution" ? "!" : "✓"}</span>
       <strong>${assessment.title}</strong>
     </div>
     <ul>
@@ -231,7 +231,7 @@ function renderMeal() {
   elements.clearMeal.disabled = items.length === 0;
   elements.copySummary.disabled = items.length === 0;
   elements.heroMealKcal.textContent = meal.values.kcal === null
-    ? "?"
+    ? "—"
     : Math.round(meal.values.kcal);
   elements.heroFoodCount.textContent = foods.length;
   renderDailyCalorieGoal(meal.values.kcal);
@@ -248,8 +248,8 @@ function renderDataCoverage() {
   elements.officialCoverage.textContent = `${officialCount} / ${foods.length}`;
   elements.storeTemplateName.textContent = STORE_TEMPLATE.name;
   elements.storeTemplateMeta.textContent =
-    `${STORE_TEMPLATE.city}${STORE_TEMPLATE.district} ? ${STORE_TEMPLATE.scope}`;
-  elements.storeTemplateCount.textContent = `${foods.length} ?`;
+    `${STORE_TEMPLATE.city}${STORE_TEMPLATE.district} · ${STORE_TEMPLATE.scope}`;
+  elements.storeTemplateCount.textContent = `${foods.length} 条`;
 }
 
 function renderDailyCalorieGoal(mealKcal) {
@@ -265,17 +265,17 @@ function renderDailyCalorieGoal(mealKcal) {
   elements.calorieGoalBar.classList.toggle("over", progress.exceeded);
 
   if (progress.mealKcal === null) {
-    elements.calorieGoalRemaining.textContent = "?????";
-    elements.calorieGoalStatus.textContent = "?????????????????????";
+    elements.calorieGoalRemaining.textContent = "选餐后显示";
+    elements.calorieGoalStatus.textContent = "当前只比较本餐与每日目标，不记录其他餐次。";
     return;
   }
 
   elements.calorieGoalRemaining.textContent = progress.exceeded
-    ? `?? ${Math.round(Math.abs(progress.remainingKcal))} kcal`
-    : `?? ${Math.round(progress.remainingKcal)} kcal`;
+    ? `超出 ${Math.round(Math.abs(progress.remainingKcal))} kcal`
+    : `剩余 ${Math.round(progress.remainingKcal)} kcal`;
   elements.calorieGoalStatus.textContent = progress.exceeded
-    ? "???????????????"
-    : `????????? ${percentage}%?`;
+    ? "本餐已超过设定的每日热量目标。"
+    : `本餐约占每日目标的 ${percentage}%。`;
 }
 
 function nutritionTile(field, meal) {
@@ -288,10 +288,10 @@ function nutritionTile(field, meal) {
   return `
     <div class="nutrition-tile ${value === null ? "missing" : ""}">
       <span>${meta.label}</span>
-      <strong>${value === null ? "?" : Number(value).toFixed(meta.digits)}</strong>
+      <strong>${value === null ? "—" : Number(value).toFixed(meta.digits)}</strong>
       <small>${
         value === null
-          ? (meal.items.length === 0 ? "???" : `? ${missingCount} ?`)
+          ? (meal.items.length === 0 ? "未选择" : `缺 ${missingCount} 项`)
           : meta.unit
       }</small>
     </div>
@@ -327,15 +327,15 @@ function setDailyCalorieGoal(value) {
 }
 
 function displayServing(food, quantity) {
-  if (food.serving.unit === "?") {
-    return `${food.serving.amount * quantity} ?`;
+  if (food.serving.unit === "克") {
+    return `${food.serving.amount * quantity} 克`;
   }
 
   if (food.serving.weightG) {
-    return `${quantity} ? ? ? ${food.serving.weightG * quantity} ?`;
+    return `${quantity} 份 · 约 ${food.serving.weightG * quantity} 克`;
   }
 
-  return `${quantity} ? ? ????`;
+  return `${quantity} 份 · 克重未知`;
 }
 
 function adjustQuantity(foodId, delta) {
@@ -354,31 +354,31 @@ function adjustQuantity(foodId, delta) {
 function copyMealSummary() {
   const meal = calculateMeal(selectedItems(), foodIndex);
   const itemLines = meal.items.map(
-    ({ food, quantity }) => `- ${food.name}?${displayServing(food, quantity)}`,
+    ({ food, quantity }) => `- ${food.name}：${displayServing(food, quantity)}`,
   );
   const text = [
-    "????",
+    "本餐组合",
     ...itemLines,
     "",
-    "????",
-    `- ???${formatValue("kcal", meal.values.kcal)}`,
-    `- ????${formatValue("proteinG", meal.values.proteinG)}`,
-    `- ???${formatValue("fatG", meal.values.fatG)}`,
-    `- ???${formatValue("carbG", meal.values.carbG)}`,
-    `- ??${formatValue("sodiumMg", meal.values.sodiumMg)}`,
-    `- ?????${formatValue("saltEquivalentG", meal.values.saltEquivalentG)}`,
+    "营养合计",
+    `- 热量：${formatValue("kcal", meal.values.kcal)}`,
+    `- 蛋白质：${formatValue("proteinG", meal.values.proteinG)}`,
+    `- 脂肪：${formatValue("fatG", meal.values.fatG)}`,
+    `- 碳水：${formatValue("carbG", meal.values.carbG)}`,
+    `- 钠：${formatValue("sodiumMg", meal.values.sodiumMg)}`,
+    `- 食盐当量：${formatValue("saltEquivalentG", meal.values.saltEquivalentG)}`,
     "",
-    `???????${state.dailyCalorieGoal} kcal`,
-    `?????${Math.round(
+    `每日热量目标：${state.dailyCalorieGoal} kcal`,
+    `本餐占比：${Math.round(
       buildCalorieProgress(meal.values.kcal, state.dailyCalorieGoal).percentage ?? 0,
     )}%`,
     "",
-    "???????????????????? 0 ???",
+    "说明：结果基于公开第三方数据；缺失值未按 0 计算。",
   ].join("\n");
 
   navigator.clipboard.writeText(text)
-    .then(() => showToast("???????"))
-    .catch(() => showToast("?????????????"));
+    .then(() => showToast("本餐摘要已复制"))
+    .catch(() => showToast("复制失败，请检查浏览器权限"));
 }
 
 let toastTimer;
@@ -400,7 +400,7 @@ elements.clearMeal.addEventListener("click", () => {
   state.selected.clear();
   renderFoodList();
   renderMeal();
-  showToast("?????");
+  showToast("餐盘已清空");
 });
 
 elements.copySummary.addEventListener("click", copyMealSummary);
@@ -425,7 +425,7 @@ document.addEventListener("click", (event) => {
   const calorieGoalButton = event.target.closest("[data-calorie-goal]");
   if (calorieGoalButton) {
     setDailyCalorieGoal(calorieGoalButton.dataset.calorieGoal);
-    showToast(`????????? ${state.dailyCalorieGoal} kcal`);
+    showToast(`每日热量目标已设为 ${state.dailyCalorieGoal} kcal`);
     return;
   }
 
@@ -437,7 +437,7 @@ document.addEventListener("click", (event) => {
   const { action, foodId } = actionButton.dataset;
   if (action === "add-food") {
     adjustQuantity(foodId, 1);
-    showToast(`${foodIndex.get(foodId).name} ?????`);
+    showToast(`${foodIndex.get(foodId).name} 已加入餐盘`);
   } else if (action === "increase") {
     adjustQuantity(foodId, 0.5);
   } else if (action === "decrease") {
@@ -453,8 +453,8 @@ function updateConnectionStatus() {
   const offline = !navigator.onLine;
   elements.offlineStatus.classList.toggle("offline", offline);
   elements.offlineStatus.querySelector("span").textContent = offline
-    ? "???? ? ????"
-    : "?? ? ?????";
+    ? "当前离线 · 缓存可用"
+    : "在线 · 已支持离线";
 }
 
 window.addEventListener("online", updateConnectionStatus);
@@ -484,8 +484,8 @@ if ("serviceWorker" in navigator) {
       await registration.update();
       updateConnectionStatus();
     } catch (error) {
-      console.warn("Service Worker ?????", error);
-      elements.offlineStatus.querySelector("span").textContent = "????????";
+      console.warn("Service Worker 注册失败：", error);
+      elements.offlineStatus.querySelector("span").textContent = "离线缓存暂不可用";
     }
   });
 }
