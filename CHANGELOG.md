@@ -2,6 +2,19 @@
 
 本项目遵循 [Semantic Versioning](https://semver.org/)。
 
+## [0.2.0] - 2026-07-02
+
+### Added
+
+- 餐品数据由 6 条扩充到 20 条，其中 14 条包含钠值。
+- Service Worker 应用外壳缓存、离线导航回退和旧缓存清理。
+- Web App Manifest、应用图标和在线/离线状态提示。
+- Service Worker 自动化测试。
+
+### Removed
+
+- 目标配餐、组合枚举、随机/推荐相关界面、逻辑与测试。
+
 ## [0.1.0] - 2026-07-02
 
 ### Added

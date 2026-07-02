@@ -10,15 +10,10 @@ import {
   formatValue,
   NUTRIENT_META,
 } from "./core/nutrition.js";
-import {
-  GOALS,
-  recommendMeals,
-} from "./core/recommendation.js";
 
 const state = {
   category: "all",
   query: "",
-  goal: "balanced",
   selected: new Map([
     ["lxj-san-hei-yuan-qi-fan", 1],
     ["lxj-lu-ji-tui", 1],
@@ -35,11 +30,13 @@ const elements = {
   mealAssessment: document.querySelector("#meal-assessment"),
   clearMeal: document.querySelector("#clear-meal"),
   copySummary: document.querySelector("#copy-summary"),
-  goalSelector: document.querySelector("#goal-selector"),
-  recommendationContext: document.querySelector("#recommendation-context"),
-  recommendationList: document.querySelector("#recommendation-list"),
   heroMealKcal: document.querySelector("#hero-meal-kcal"),
   heroFoodCount: document.querySelector("#hero-food-count"),
+  macroCoverage: document.querySelector("#macro-coverage"),
+  sodiumCoverage: document.querySelector("#sodium-coverage"),
+  sodiumCoverageBar: document.querySelector("#sodium-coverage-bar"),
+  officialCoverage: document.querySelector("#official-coverage"),
+  offlineStatus: document.querySelector("#offline-status"),
   toast: document.querySelector("#toast"),
 };
 
@@ -47,8 +44,7 @@ function render() {
   renderCategoryFilters();
   renderFoodList();
   renderMeal();
-  renderGoalSelector();
-  renderRecommendations();
+  renderDataCoverage();
 }
 
 function renderCategoryFilters() {
@@ -115,8 +111,11 @@ function renderFoodList() {
             <div><dt>碳水</dt><dd>${food.nutrients.carbG.toFixed(1)}g</dd></div>
           </dl>
           <div class="food-card-bottom">
-            <span class="missing-flag">
-              <i>!</i> 钠待补充
+            <span class="missing-flag ${food.nutrients.sodiumMg === null ? "" : "complete"}">
+              <i>${food.nutrients.sodiumMg === null ? "!" : "✓"}</i>
+              ${food.nutrients.sodiumMg === null
+                ? "钠待补充"
+                : `钠 ${food.nutrients.sodiumMg}mg`}
             </span>
             <button
               class="add-button"
@@ -142,11 +141,11 @@ function renderMeal() {
 
   if (items.length === 0) {
     elements.selectedFoods.innerHTML = `
-      <div class="meal-empty">
-        <div class="empty-plate"><span>+</span></div>
-        <strong>餐盘还是空的</strong>
-        <p>从左侧加入菜品，或者直接采用下方推荐。</p>
-      </div>
+        <div class="meal-empty">
+          <div class="empty-plate"><span>+</span></div>
+          <strong>餐盘还是空的</strong>
+          <p>从左侧挑选菜品，自由搭配这一餐。</p>
+        </div>
     `;
   } else {
     elements.selectedFoods.innerHTML = meal.items
@@ -221,6 +220,17 @@ function renderMeal() {
   elements.heroFoodCount.textContent = foods.length;
 }
 
+function renderDataCoverage() {
+  const sodiumCount = foods.filter((food) => food.nutrients.sodiumMg !== null).length;
+  const officialCount = foods.filter((food) => food.source.type === "official").length;
+  const sodiumRatio = sodiumCount / foods.length;
+
+  elements.macroCoverage.textContent = `${foods.length} / ${foods.length}`;
+  elements.sodiumCoverage.textContent = `${sodiumCount} / ${foods.length}`;
+  elements.sodiumCoverageBar.style.width = `${sodiumRatio * 100}%`;
+  elements.officialCoverage.textContent = `${officialCount} / ${foods.length}`;
+}
+
 function nutritionTile(field, meal) {
   const value = meal.values[field];
   const meta = NUTRIENT_META[field];
@@ -241,104 +251,6 @@ function nutritionTile(field, meal) {
   `;
 }
 
-function renderGoalSelector() {
-  elements.goalSelector.innerHTML = Object.entries(GOALS)
-    .map(([value, goal]) => `
-      <button
-        class="goal-button ${state.goal === value ? "active" : ""} ${value === "low_sodium" ? "has-gap" : ""}"
-        type="button"
-        data-goal="${value}"
-        aria-pressed="${state.goal === value}"
-      >
-        <span class="goal-icon" aria-hidden="true">${goalIcon(value)}</span>
-        <span>
-          <strong>${goal.label}</strong>
-          <small>${goal.description}</small>
-        </span>
-        ${value === "low_sodium" ? '<i class="goal-warning">数据不足</i>' : ""}
-      </button>
-    `)
-    .join("");
-}
-
-function renderRecommendations() {
-  const recommendation = recommendMeals(foods, foodIndex, state.goal, 3);
-  const goal = GOALS[state.goal];
-
-  elements.recommendationContext.innerHTML = `
-    <div>
-      <span>当前目标</span>
-      <strong>${goal.label}</strong>
-    </div>
-    <p>${goal.description} 评分只用于当前候选间比较，不是医学健康分。</p>
-  `;
-
-  if (!recommendation.available) {
-    elements.recommendationList.innerHTML = `
-      <div class="recommendation-unavailable">
-        <span aria-hidden="true">!</span>
-        <div>
-          <strong>这个模式暂时不能可靠运行</strong>
-          <p>${recommendation.reason}</p>
-          <a href="#data-notes">查看缺失数据说明 →</a>
-        </div>
-      </div>
-    `;
-    return;
-  }
-
-  elements.recommendationList.innerHTML = recommendation.results
-    .map((result, index) => {
-      const itemNames = result.items
-        .map((item) => foodIndex.get(item.foodId).name);
-      const values = result.meal.values;
-
-      return `
-        <article class="recommendation-card ${index === 0 ? "best" : ""}">
-          <div class="recommendation-rank">
-            <span>${String(index + 1).padStart(2, "0")}</span>
-            ${index === 0 ? "<b>最匹配</b>" : "<b>备选</b>"}
-          </div>
-          <div class="recommendation-body">
-            <div class="recommendation-title-row">
-              <div>
-                <span class="category-pill">${goal.shortLabel}</span>
-                <h3>${itemNames.join(" · ")}</h3>
-              </div>
-              <div class="score-ring" style="--score:${result.score}">
-                <strong>${result.score}</strong>
-                <small>适配度</small>
-              </div>
-            </div>
-            <div class="recommendation-macros">
-              <span><b>${Math.round(values.kcal)}</b> kcal</span>
-              <span><b>${values.proteinG.toFixed(1)}</b>g 蛋白质</span>
-              <span><b>${values.fatG.toFixed(1)}</b>g 脂肪</span>
-              <span><b>${values.carbG.toFixed(1)}</b>g 碳水</span>
-            </div>
-            <div class="recommendation-why">
-              <strong>为什么推荐</strong>
-              <ul>${result.explanation.map((line) => `<li>${line}</li>`).join("")}</ul>
-            </div>
-            <div class="recommendation-footer">
-              <span><i></i> 钠数据仍待补充</span>
-              <button
-                class="button button-dark"
-                type="button"
-                data-action="use-recommendation"
-                data-recommendation-index="${index}"
-              >
-                采用这份组合
-                <span aria-hidden="true">+</span>
-              </button>
-            </div>
-          </div>
-        </article>
-      `;
-    })
-    .join("");
-}
-
 function selectedItems() {
   return Array.from(state.selected, ([foodId, quantity]) => ({ foodId, quantity }));
 }
@@ -353,15 +265,6 @@ function displayServing(food, quantity) {
   }
 
   return `${quantity} 份 · 克重未知`;
-}
-
-function goalIcon(goal) {
-  return {
-    balanced: "◒",
-    lower_calorie: "↘",
-    high_protein: "↗",
-    low_sodium: "≈",
-  }[goal];
 }
 
 function adjustQuantity(foodId, delta) {
@@ -435,14 +338,6 @@ document.addEventListener("click", (event) => {
     return;
   }
 
-  const goalButton = event.target.closest("[data-goal]");
-  if (goalButton) {
-    state.goal = goalButton.dataset.goal;
-    renderGoalSelector();
-    renderRecommendations();
-    return;
-  }
-
   const actionButton = event.target.closest("[data-action]");
   if (!actionButton) {
     return;
@@ -460,19 +355,31 @@ document.addEventListener("click", (event) => {
     state.selected.delete(foodId);
     renderFoodList();
     renderMeal();
-  } else if (action === "use-recommendation") {
-    const recommendation = recommendMeals(foods, foodIndex, state.goal, 3);
-    const result = recommendation.results[Number(actionButton.dataset.recommendationIndex)];
-    if (result) {
-      state.selected = new Map(
-        result.items.map((item) => [item.foodId, item.quantity]),
-      );
-      renderFoodList();
-      renderMeal();
-      document.querySelector("#planner").scrollIntoView({ behavior: "smooth" });
-      showToast("推荐组合已放入餐盘");
-    }
   }
 });
 
+function updateConnectionStatus() {
+  const offline = !navigator.onLine;
+  elements.offlineStatus.classList.toggle("offline", offline);
+  elements.offlineStatus.querySelector("span").textContent = offline
+    ? "当前离线 · 缓存可用"
+    : "在线 · 已支持离线";
+}
+
+window.addEventListener("online", updateConnectionStatus);
+window.addEventListener("offline", updateConnectionStatus);
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", async () => {
+    try {
+      await navigator.serviceWorker.register("./service-worker.js", { scope: "./" });
+      updateConnectionStatus();
+    } catch (error) {
+      console.warn("Service Worker 注册失败：", error);
+      elements.offlineStatus.querySelector("span").textContent = "离线缓存暂不可用";
+    }
+  });
+}
+
 render();
+updateConnectionStatus();
