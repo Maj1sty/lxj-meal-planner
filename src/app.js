@@ -4,18 +4,18 @@ import {
   foods,
   SOURCE_LEVELS,
   STORE_TEMPLATE,
-} from "./data/foods.js?version=v0.3.1";
+} from "./data/foods.js?version=v0.4.0";
 import {
   buildCalorieProgress,
   DEFAULT_DAILY_CALORIE_GOAL,
   normalizeDailyCalorieGoal,
-} from "./core/calorie-goal.js?version=v0.3.1";
+} from "./core/calorie-goal.js?version=v0.4.0";
 import {
   buildMealAssessment,
   calculateMeal,
   formatValue,
   NUTRIENT_META,
-} from "./core/nutrition.js?version=v0.3.1";
+} from "./core/nutrition.js?version=v0.4.0";
 
 const state = {
   category: "all",
@@ -104,7 +104,7 @@ function renderFoodList() {
       const sourceLevel = SOURCE_LEVELS[food.source.type];
 
       return `
-        <article class="food-card ${selectedQuantity > 0 ? "selected" : ""}">
+        <article class="food-card category-${food.category} ${selectedQuantity > 0 ? "selected" : ""}">
           <div class="food-card-top">
             <span class="category-pill">${CATEGORY_LABELS[food.category]}</span>
             <span class="source-pill ${sourceLevel.tone}">
