@@ -57,8 +57,8 @@ test("service worker updates bypass caches and activate without a manual reload"
 });
 
 test("version-critical browser resources use the current cache-busting version", () => {
-  assert.match(indexSource, /src\/app\.js\?version=v0\.3\.1/);
-  assert.match(indexSource, /src\/styles\.css\?version=v0\.3\.1/);
-  assert.match(appSource, /data\/foods\.js\?version=v0\.3\.1/);
-  assert.match(source, /CACHE_VERSION = "v0\.3\.1"/);
+  assert.match(indexSource, /src\/app\.js\?version=v0\.4\.0/);
+  assert.match(indexSource, /src\/styles\.css\?version=v0\.4\.0/);
+  assert.match(appSource, /data\/foods\.js\?version=v0\.4\.0/);
+  assert.match(source, /CACHE_VERSION = "v0\.4\.0"/);
 });

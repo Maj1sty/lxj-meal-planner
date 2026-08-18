@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "lxj-meal-planner-";
-const CACHE_VERSION = "v0.3.1";
+const CACHE_VERSION = "v0.4.0";
 const CACHE_NAME = `${CACHE_PREFIX}${CACHE_VERSION}`;
 const APP_SHELL_PATHS = [
   "./",

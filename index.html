@@ -11,7 +11,7 @@
     <title>餐盘有数 · LXJ Meal Planner</title>
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%23173c32%22/><circle cx=%2232%22 cy=%2232%22 r=%2218%22 fill=%22%23f3e8d3%22/><path d=%22M20 34c8-9 15-10 24-4-2 9-10 14-18 12-4-1-6-4-6-8Z%22 fill=%22%23e86e45%22/></svg>">
-    <link rel="stylesheet" href="./src/styles.css?version=v0.3.1">
+    <link rel="stylesheet" href="./src/styles.css?version=v0.4.0">
   </head>
   <body>
     <a class="skip-link" href="#main-content">跳到主要内容</a>
@@ -45,14 +45,13 @@
     <main id="main-content">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <div class="eyebrow">
-            <span class="eyebrow-dot"></span>
-            v0.3.1 · 98 条餐品 · 缓存更新修复
-          </div>
           <h1 id="hero-title">
             这顿饭，
             <span>吃得更明白。</span>
           </h1>
+          <p class="hero-version">
+            v0.4.0 · 98 条餐品 · 界面视觉精修
+          </p>
           <p class="hero-lead">
             选择菜品，自动汇总热量与宏量营养，随手调整每份数量。
             每个数字都带来源，每个缺口都不藏起来。
@@ -128,7 +127,7 @@
       <section class="section planner-section" id="planner" aria-labelledby="planner-title">
         <div class="section-heading">
           <div>
-            <span class="section-kicker">01 · 自由搭配</span>
+            <span class="section-kicker">自由搭配</span>
             <h2 id="planner-title">挑你想吃的，数字交给我。</h2>
           </div>
           <p>数量按数据源标示的“一份”或“每100克”计算，可使用 0.5 倍增量。</p>
@@ -244,7 +243,7 @@
 
       <section class="section data-section" id="data-notes" aria-labelledby="data-title">
         <div class="data-intro">
-          <span class="section-kicker light">02 · 数据与离线说明</span>
+          <span class="section-kicker light">数据与离线说明</span>
           <h2 id="data-title">知道多少，就诚实地说多少。</h2>
           <p>
             当前收录 98 条可追溯餐品，其中 87 条来自溯源报告开源整理。
@@ -326,6 +325,20 @@
           </div>
           <ol class="update-list">
             <li class="current">
+              <div class="update-version">
+                <strong>v0.4.0</strong>
+                <time datetime="2026-08-19">2026.08.19</time>
+              </div>
+              <div>
+                <h4>前端 UI 美化</h4>
+                <ul>
+                  <li>优化首页视觉层级、按钮状态、导航与餐盘展示。</li>
+                  <li>重做菜品卡片、筛选栏、搜索框和右侧餐盘面板的细节质感。</li>
+                  <li>补强移动端排版、焦点样式、滚动条、选择态和离线提示的统一性。</li>
+                </ul>
+              </div>
+            </li>
+            <li>
               <div class="update-version">
                 <strong>v0.3.1</strong>
                 <time datetime="2026-07-02">2026.07.02</time>
@@ -482,6 +495,6 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-    <script type="module" src="./src/app.js?version=v0.3.1"></script>
+    <script type="module" src="./src/app.js?version=v0.4.0"></script>
   </body>
 </html>
